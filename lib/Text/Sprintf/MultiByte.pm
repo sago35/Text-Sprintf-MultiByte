@@ -68,13 +68,24 @@ sub spf {
                 $fmt_new .= $tmp . $s;
                 $index++;
                 $state = "IDL";
-            } elsif ($s =~ /\A[\*]\Z/) {
+            } elsif ($s eq "*") {
                 $tmp .= $s;
-                $index++;
+                $state = "READ_ARGUMENT_NUMBER";
             } elsif ($s =~ /\A[-+ 0-9#\.v]\Z/) {
                 $tmp .= $s;
             } else {
                 croak "not supported : $fmt";
+            }
+        } elsif ($state eq "READ_ARGUMENT_NUMBER") {
+            if ($s =~ /\A[0-9]\Z/) {
+                $tmp .= $s;
+            } elsif ($s eq '$') {
+                $tmp .= $s;
+                $state = "READ_FORMAT";
+            } else {
+                $state = "READ_FORMAT";
+                $index++;
+                next;
             }
         } else {
             croak "state error : $state";
