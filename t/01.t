@@ -194,5 +194,9 @@ subtest "(minimum) width" => sub {
     is spf('%*2$s%3$3s', 'a', 6, 'あ'), '     a あ';
 };
 
+subtest "complex pattern" => sub {
+    is spf('%*3$s%*4$s', 'あ', 'い', 3, 4), ' あ  い';
+};
+
 done_testing;
 
