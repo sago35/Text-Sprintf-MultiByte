@@ -185,5 +185,14 @@ subtest "vector flag" => sub {
     is spf('%*4$vd %*4$vd %*4$vd %3s %3s', '12', '23', '34', ':', 'あ'), '49:50 50:51 51:52   :  あ';
 };
 
+subtest "(minimum) width" => sub {
+    is spf('%s%3s', 'a', 'あ'), 'a あ';
+    is spf('%6s%3s', 'a', 'あ'), '     a あ';
+    is spf('%*s%3s', 6, 'a', 'あ'), '     a あ';
+    is spf('%*2$s%3s%3s', 'a', 6, 'あ'), '     a  6 あ';
+    is spf('%2s%3s', 'long', 'あ'), 'long あ';
+    is spf('%*2$s%3$3s', 'a', 6, 'あ'), '     a あ';
+};
+
 done_testing;
 

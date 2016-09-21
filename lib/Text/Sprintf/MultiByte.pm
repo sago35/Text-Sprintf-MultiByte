@@ -48,16 +48,24 @@ sub spf {
                 # %s
                 $tmp .= $s;
 
-                if ($tmp =~ /^%(-?)([0-9]+)s$/) {
-                    my $left = $1 eq "-" ? 1 : 0;
-                    my $width = int $2;
+                if ($tmp =~ /^%(([0-9]+)\$)?(-?)([0-9]+)s$/) {
+                    my $x1 = $1 // "";
+                    my $x2 = $2 // "";
+                    my $x3 = $3 // "";
+                    my $x4 = $4 // "";
 
-                    my $str_width   = length $argv[$index];
-                    my $cp932_width = length $cp932->encode($argv[$index]);
+                    my $pos = $x2 ne "" ? int $x2 : -1;
+                    my $left = $x3 eq "-" ? 1 : 0;
+                    my $width = int $x4;
+
+                    my $tmp_index = $pos == -1 ? $index : $pos - 1;
+
+                    my $str_width   = length $argv[$tmp_index];
+                    my $cp932_width = length $cp932->encode($argv[$tmp_index]);
 
                     my $diff = $cp932_width - $str_width;
 
-                    $tmp = sprintf "%%%s%ds", $1, $width - $diff;
+                    $tmp = sprintf "%%%s%s%ds", $x1, $x3, $width - $diff;
                 }
 
                 $fmt_new .= $tmp;
@@ -71,7 +79,10 @@ sub spf {
             } elsif ($s eq "*") {
                 $tmp .= $s;
                 $state = "READ_ARGUMENT_NUMBER";
-            } elsif ($s =~ /\A[-+ 0-9#\.v]\Z/) {
+            } elsif ($s =~ /\A[0-9]\Z/) {
+                $tmp .= $s;
+                $state = "READ_FORMAT_OR_ARGUMENT_NUMBER";
+            } elsif ($s =~ /\A[-+ #\.v]\Z/) {
                 $tmp .= $s;
             } else {
                 croak "not supported : $fmt";
@@ -85,6 +96,16 @@ sub spf {
             } else {
                 $state = "READ_FORMAT";
                 $index++;
+                next;
+            }
+        } elsif ($state eq "READ_FORMAT_OR_ARGUMENT_NUMBER") {
+            if ($s =~ /\A[0-9]\Z/) {
+                $tmp .= $s;
+            } elsif ($s eq '$') {
+                $tmp .= $s;
+                $state = "READ_FORMAT";
+            } else {
+                $state = "READ_FORMAT";
                 next;
             }
         } else {
