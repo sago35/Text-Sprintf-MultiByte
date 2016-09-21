@@ -143,5 +143,47 @@ subtest "spf %A" => sub {
     is spf("%A%3s%A", ord('A'), "あ", ord('B')), "0X1.04P+6 あ0X1.08P+6";
 };
 
+subtest "space" => sub {
+    is spf("% d%3s% d", 1, "あ", -1), " 1 あ-1";
+};
+
+subtest "plus '+'" => sub {
+    is spf("%+d%3s%+d", 1, "あ", -1), "+1 あ-1";
+};
+
+subtest "minus '-'" => sub {
+    is spf("%-2s%3s%-2s", 1, "あ", -1), "1  あ-1";
+};
+
+subtest "zero '0'" => sub {
+    is spf("%02d%3s%02d", 1, "あ", -1), "01 あ-1";
+};
+
+subtest "sharp '#'" => sub {
+    is spf("%#o%3s%#o", 12, "あ", 12), "014 あ014";
+    is spf("%#x%3s%#x", 12, "あ", 12), "0xc あ0xc";
+    is spf("%#X%3s%#X", 12, "あ", 12), "0XC あ0XC";
+    is spf("%#b%3s%#b", 12, "あ", 12), "0b1100 あ0b1100";
+    is spf("%#B%3s%#B", 12, "あ", 12), "0B1100 あ0B1100";
+};
+
+subtest "plus '+' and space ' '" => sub {
+    is spf("%+ d%3s% +d", 12, "あ", 12), "+12 あ+12";
+};
+
+subtest "sharp '#' and precision" => sub {
+    is spf("%#.5o%3s", 012, "あ"), "00012 あ";
+    is spf("%#.5o%3s", 012345, "あ"), "012345 あ";
+    is spf("%#.0o%3s", 0, "あ"), "0 あ";
+};
+
+subtest "vector flag" => sub {
+    is spf("%vd%3s", "AB\x{100}", "あ"), "65.66.256 あ";
+
+    is spf("%*vd%3s", ":", "1234", "あ"), "49:50:51:52 あ";
+    is spf("%*vd%3s", " ", "1234", "あ"), "49 50 51 52 あ";
+    #is spf('%*4$vX %*4$vX %*4$vX %3s', "12", "23", "34", ":", "あ"), "49:50 50:51 51:52  あ";
+};
+
 done_testing;
 

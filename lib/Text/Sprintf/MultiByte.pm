@@ -68,9 +68,10 @@ sub spf {
                 $fmt_new .= $tmp . $s;
                 $index++;
                 $state = "IDL";
-            } elsif ($s eq "-") {
+            } elsif ($s =~ /\A[\*]\Z/) {
                 $tmp .= $s;
-            } elsif ($s =~ /[0-9]/) {
+                $index++;
+            } elsif ($s =~ /\A[-+ 0-9#\.v]\Z/) {
                 $tmp .= $s;
             } else {
                 croak "not supported : $fmt";
