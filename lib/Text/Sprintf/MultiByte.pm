@@ -124,15 +124,17 @@ __END__
 
 =head1 NAME
 
-Text::Sprintf::MultiByte - It's new $module
+Text::Sprintf::MultiByte - sprintf with multibyte chars
 
 =head1 SYNOPSIS
 
     use Text::Sprintf::MultiByte;
 
+    spf "<%3s>", "あ"; # multibyte char works good
+
 =head1 DESCRIPTION
 
-Text::Sprintf::MultiByte is ...
+Text::Sprintf::MultiByte is sprintf with multibyte chars.
 
 =head1 LICENSE
 

@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "sprintf with multibyte chars",
    "author" : [
       "sago35 <sago35@gmail.com>"
    ],
@@ -52,6 +52,17 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/sago35/Text-Sprintf-MultiByte/issues"
+      },
+      "homepage" : "https://github.com/sago35/Text-Sprintf-MultiByte",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/sago35/Text-Sprintf-MultiByte.git",
+         "web" : "https://github.com/sago35/Text-Sprintf-MultiByte"
+      }
+   },
    "version" : "0.01",
    "x_serialization_backend" : "JSON::PP version 2.27300"
 }

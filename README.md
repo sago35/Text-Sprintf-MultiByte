@@ -1,14 +1,17 @@
+[![Build Status](https://travis-ci.org/sago35/Text-Sprintf-MultiByte.svg?branch=master)](https://travis-ci.org/sago35/Text-Sprintf-MultiByte) [![Coverage Status](http://codecov.io/github/sago35/Text-Sprintf-MultiByte/coverage.svg?branch=master)](https://codecov.io/github/sago35/Text-Sprintf-MultiByte?branch=master)
 # NAME
 
-Text::Sprintf::MultiByte - It's new $module
+Text::Sprintf::MultiByte - sprintf with multibyte chars
 
 # SYNOPSIS
 
     use Text::Sprintf::MultiByte;
 
+    spf "<%3s>", "あ"; # multibyte char works good
+
 # DESCRIPTION
 
-Text::Sprintf::MultiByte is ...
+Text::Sprintf::MultiByte is sprintf with multibyte chars.
 
 # LICENSE
 
