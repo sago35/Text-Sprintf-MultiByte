@@ -30,13 +30,8 @@ sub spf {
         if ($state eq "IDL") {
             if ($s eq "%") {
                 if ($ofs + 1 <= $length) {
-                    my $t = substr $fmt, $ofs + 1, 1;
-                    if ($t eq "%") {
-                        $fmt_new .= "%%";
-                    } else {
-                        $tmp   = $s;
-                        $state = "READ_FORMAT";
-                    }
+                    $tmp   = $s;
+                    $state = "READ_FORMAT";
                 } else {
                     $fmt_new = $s;
                 }
@@ -44,7 +39,12 @@ sub spf {
                 $fmt_new .= $s;
             }
         } elsif ($state eq "READ_FORMAT") {
-            if ($s eq "s") {
+            if ($s eq "%") {
+                # 'a percent sign' literal
+                $fmt_new .= "%%";
+                $state = "IDL";
+
+            } elsif ($s eq "s") {
                 # ここで%sが完成
                 $tmp .= $s;
 

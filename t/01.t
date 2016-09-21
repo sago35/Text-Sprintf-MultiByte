@@ -69,5 +69,9 @@ subtest "spf with no parentheses" => sub {
     is + (spf "[%-20s][%1s][%-1s]", "hello 世界.", "あ", "い"), "[hello 世界.         ][あ][い]";
 };
 
+subtest "spf %%" => sub {
+    is spf("%%%%%s%%", "あ"), "%%あ%";
+};
+
 done_testing;
 
