@@ -77,5 +77,33 @@ subtest "spf %c" => sub {
     is spf("%c%3s%c", ord('A'), "あ", ord('B')), "A あB";
 };
 
+subtest "spf %d" => sub {
+    is spf("%d%3s%d", ord('A'), "あ", ord('B')), "65 あ66";
+};
+
+subtest "spf %u" => sub {
+    is spf("%u%3s%u", ord('A'), "あ", ord('B')), "65 あ66";
+};
+
+subtest "spf %o" => sub {
+    is spf("%o%3s%o", ord('A'), "あ", ord('B')), "101 あ102";
+};
+
+subtest "spf %x" => sub {
+    is spf("%x%3s%x", ord('A'), "あ", ord('B')), "41 あ42";
+};
+
+subtest "spf %e" => sub {
+    is spf("%e%3s%e", ord('A'), "あ", ord('B')), "6.500000e+001 あ6.600000e+001";
+};
+
+subtest "spf %f" => sub {
+    is spf("%f%3s%f", ord('A'), "あ", ord('B')), "65.000000 あ66.000000";
+};
+
+subtest "spf %g" => sub {
+    is spf("%g%3s%g", ord('A'), "あ", ord('B')), "65 あ66";
+};
+
 done_testing;
 
