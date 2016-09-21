@@ -63,8 +63,8 @@ sub spf {
                 $fmt_new .= $tmp;
                 $index++;
                 $state = "IDL";
-            } elsif ($s =~ /\A[cduoxefg]\Z/) {
-                # %c, %d, %u, %o, %x, %e, %f, %g
+            } elsif ($s =~ /\A[cduoxefgXEGbBpnaA]\Z/) {
+                # %c, %d, %u, %o, %x, %e, %f, %g, ...
                 $fmt_new .= $tmp . $s;
                 $index++;
                 $state = "IDL";

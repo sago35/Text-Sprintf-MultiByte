@@ -102,7 +102,45 @@ subtest "spf %f" => sub {
 };
 
 subtest "spf %g" => sub {
-    is spf("%g%3s%g", ord('A'), "あ", ord('B')), "65 あ66";
+    is spf("%g%3s%g", ord('A'), "あ", 6.6e-9), "65 あ6.6e-009";
+};
+
+subtest "spf %X" => sub {
+    is spf("%X%3s%X", ord('A'), "あ", 0xFF), "41 あFF";
+};
+
+subtest "spf %E" => sub {
+    is spf("%E%3s%E", ord('A'), "あ", ord('B')), "6.500000E+001 あ6.600000E+001";
+};
+
+subtest "spf %G" => sub {
+    is spf("%G%3s%G", ord('A'), "あ", 6.6e-9), "65 あ6.6E-009";
+};
+
+subtest "spf %b" => sub {
+    is spf("%b%3s%b", ord('A'), "あ", ord('B')), "1000001 あ1000010";
+};
+
+subtest "spf %B" => sub {
+    is spf("%B%3s%B", ord('A'), "あ", ord('B')), "1000001 あ1000010";
+};
+
+subtest "spf %p" => sub {
+    my $x = ord('A');
+    my $y = ord('B');
+    like spf("%p%3s%p", \$x, "あ", \$y), qr/^[0-9a-f]{4,} あ[0-9a-f]{4,}$/;
+};
+
+subtest "spf %n" => sub {
+    ok 1;
+};
+
+subtest "spf %a" => sub {
+    is spf("%a%3s%a", ord('A'), "あ", ord('B')), "0x1.04p+6 あ0x1.08p+6";
+};
+
+subtest "spf %A" => sub {
+    is spf("%A%3s%A", ord('A'), "あ", ord('B')), "0X1.04P+6 あ0X1.08P+6";
 };
 
 done_testing;
