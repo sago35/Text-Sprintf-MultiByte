@@ -73,5 +73,9 @@ subtest "spf %%" => sub {
     is spf("%%%%%s%%", "あ"), "%%あ%";
 };
 
+subtest "spf %c" => sub {
+    is spf("%c%3s%c", ord('A'), "あ", ord('B')), "A あB";
+};
+
 done_testing;
 

@@ -45,7 +45,7 @@ sub spf {
                 $state = "IDL";
 
             } elsif ($s eq "s") {
-                # ここで%sが完成
+                # %s
                 $tmp .= $s;
 
                 if ($tmp =~ /^%(-?)([0-9]+)s$/) {
@@ -61,6 +61,11 @@ sub spf {
                 }
 
                 $fmt_new .= $tmp;
+                $index++;
+                $state = "IDL";
+            } elsif ($s eq "c") {
+                # %c
+                $fmt_new .= $tmp . $s;
                 $index++;
                 $state = "IDL";
             } elsif ($s eq "-") {
