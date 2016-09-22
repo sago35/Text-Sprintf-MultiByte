@@ -127,7 +127,7 @@ __END__
 
 =head1 NAME
 
-Text::Sprintf::Zenkaku - sprintf with multibyte chars
+Text::Sprintf::Zenkaku - sprintf with zenkaku chars
 
 =head1 SYNOPSIS
 
