@@ -13,6 +13,8 @@ our @EXPORT_OK = qw(sprintf);
 
 our $cp932 = Encode::find_encoding("cp932");
 
+our $conversions = $] < 5.022000 ? qr/\A[cduoxefgXEGbBpn]\Z/ : qr/\A[cduoxefgXEGbBpnaA]\Z/;
+
 sub sprintf {
     my ($fmt, @argv) = @_;
     $fmt //= "";
@@ -71,7 +73,7 @@ sub sprintf {
                 $fmt_new .= $tmp;
                 $index++;
                 $state = "IDL";
-            } elsif ($s =~ /\A[cduoxefgXEGbBpnaA]\Z/) {
+            } elsif ($s =~ /$conversions/) {
                 # %c, %d, %u, %o, %x, %e, %f, %g, ...
                 $fmt_new .= $tmp . $s;
                 $index++;
