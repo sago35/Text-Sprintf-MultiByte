@@ -194,6 +194,13 @@ subtest "(minimum) width" => sub {
     is sprintf('%*2$s%3s%3s', 'a', 6, 'あ'), '     a  6 あ';
     is sprintf('%2s%3s', 'long', 'あ'), 'long あ';
     is sprintf('%*2$s%3$3s', 'a', 6, 'あ'), '     a あ';
+
+    is sprintf('%s%3s', 'a', 'あ'), 'a あ';
+    is sprintf('%6s%3s', 'a', 'あ'), '     a あ';
+    is sprintf('%*s%3s', -6, 'a', 'あ'), 'a      あ';
+    is sprintf('%*2$s%3s%3s', 'a', -6, 'あ'), 'a      -6 あ';
+    is sprintf('%2s%3s', 'long', 'あ'), 'long あ';
+    is sprintf('%*2$s%3$3s', 'a', -6, 'あ'), 'a      あ';
 };
 
 subtest "end with '%'" => sub {
