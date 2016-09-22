@@ -2,6 +2,10 @@ Revision history for Perl extension Text-Sprintf-Zenkaku
 
 {{$NEXT}}
 
+0.03 2016-09-22T04:14:36Z
+
+    - Rename module name to Text::Sprintf::Zenkaku
+
 0.02 2016-09-22T03:17:48Z
 
     - original version
