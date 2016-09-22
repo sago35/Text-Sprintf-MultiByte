@@ -202,9 +202,9 @@ subtest "end with '%'" => sub {
     like $trap->stderr, qr/Invalid conversion in sprintf/;
 };
 
-#subtest "complex pattern" => sub {
-#    is sprintf('%*3$s%*4$s', 'あ', 'い', 3, 4), ' あ  い';
-#};
+subtest "complex pattern" => sub {
+    is sprintf('%*3$s%*4$s', 'あ', 'い', 3, 4), ' あ  い';
+};
 
 done_testing;
 

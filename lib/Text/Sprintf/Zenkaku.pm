@@ -65,6 +65,43 @@ sub sprintf {
                     my $diff = $cp932_width - $str_width;
 
                     $tmp = CORE::sprintf "%%%s%s%ds", $x1, $x3, $width - $diff;
+                } elsif ($tmp =~ /^%\*(\d+)\$s$/) {
+                    my $x1 = $1 // 0;
+
+                    my $tmp_index = (int $x1) - 1;
+                    my $left  = (int $argv[$tmp_index]) < 0 ? 1 : 0;
+                    my $width = abs int $argv[$tmp_index];
+
+                    my $str_width   = length $argv[$index];
+                    my $cp932_width = length $cp932->encode($argv[$index]);
+
+                    my $diff = $cp932_width - $str_width;
+
+                    my $width_pre = $width - $diff;
+                    $argv[$tmp_index] = $width_pre;
+                    if ($left) {
+                        $argv[$tmp_index] *= -1;
+                    }
+
+                } elsif ($tmp =~ /^%\*s$/) {
+
+                    my $tmp_index = $index - 1;
+
+                    my $left  = (int $argv[$tmp_index]) < 0 ? 1 : 0;
+                    my $width = abs int $argv[$tmp_index];
+
+                    my $str_width   = length $argv[$index];
+                    my $cp932_width = length $cp932->encode($argv[$index]);
+
+                    my $diff = $cp932_width - $str_width;
+
+                    my $width_pre = $width - $diff;
+                    $argv[$tmp_index] = $width_pre;
+                    if ($left) {
+                        $argv[$tmp_index] *= -1;
+                    }
+
+                } else {
                 }
 
                 $fmt_new .= $tmp;
