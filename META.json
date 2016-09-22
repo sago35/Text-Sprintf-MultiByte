@@ -48,6 +48,7 @@
       "test" : {
          "requires" : {
             "Term::Encoding" : "0",
+            "Test::Exception" : "0",
             "Test::More" : "0.98",
             "Test::Trap" : "0"
          }

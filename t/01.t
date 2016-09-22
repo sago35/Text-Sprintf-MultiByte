@@ -4,6 +4,7 @@ use utf8;
 use Test::More;
 use Text::Sprintf::Zenkaku qw(sprintf);
 use Test::Trap;
+use Test::Exception;
 
 use Term::Encoding qw(term_encoding);
 my $encoding = term_encoding;
@@ -211,6 +212,10 @@ subtest "end with '%'" => sub {
 
 subtest "complex pattern" => sub {
     is sprintf('%*3$s%*4$s', 'あ', 'い', 3, 4), ' あ  い';
+};
+
+subtest "not supported" => sub {
+    throws_ok {sprintf('%z', "a")} qr/not supported :/;
 };
 
 done_testing;
