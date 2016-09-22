@@ -27,23 +27,20 @@ sub sprintf {
     my $fmt_new = "";
     my $length  = length $fmt;
 
-    while ($ofs <= $length) {
+    while ($ofs < $length) {
         my $s = substr $fmt, $ofs, 1;
         if ($state eq "IDL") {
             if ($s eq "%") {
-                if ($ofs + 1 <= $length) {
-                    $tmp   = $s;
-                    $state = "READ_FORMAT";
-                } else {
-                    $fmt_new = $s;
-                }
+                $tmp   = $s;
+                $state = "READ_FORMAT";
             } else {
                 $fmt_new .= $s;
             }
         } elsif ($state eq "READ_FORMAT") {
             if ($s eq "%") {
                 # 'a percent sign' literal
-                $fmt_new .= "%%";
+                $fmt_new .= $tmp . $s;
+                $tmp = "";
                 $state = "IDL";
 
             } elsif ($s eq "s") {
@@ -71,11 +68,13 @@ sub sprintf {
                 }
 
                 $fmt_new .= $tmp;
+                $tmp = "";
                 $index++;
                 $state = "IDL";
             } elsif ($s =~ /$conversions/) {
                 # %c, %d, %u, %o, %x, %e, %f, %g, ...
                 $fmt_new .= $tmp . $s;
+                $tmp = "";
                 $index++;
                 $state = "IDL";
             } elsif ($s eq "*") {
@@ -115,6 +114,8 @@ sub sprintf {
         }
         $ofs++;
     }
+
+    $fmt_new .= $tmp;
 
     return CORE::sprintf $fmt_new, @argv;
 }

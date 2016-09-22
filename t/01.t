@@ -3,6 +3,7 @@ use warnings;
 use utf8;
 use Test::More;
 use Text::Sprintf::MultiByte qw(sprintf);
+use Test::Trap;
 
 use Term::Encoding qw(term_encoding);
 my $encoding = term_encoding;
@@ -193,6 +194,12 @@ subtest "(minimum) width" => sub {
     is sprintf('%*2$s%3s%3s', 'a', 6, 'あ'), '     a  6 あ';
     is sprintf('%2s%3s', 'long', 'あ'), 'long あ';
     is sprintf('%*2$s%3$3s', 'a', 6, 'あ'), '     a あ';
+};
+
+subtest "end with '%'" => sub {
+    trap {is sprintf('%3s%', 'あ'), ' あ%'};
+    is $trap->stdout, "";
+    like $trap->stderr, qr/^Missing argument in sprintf/;
 };
 
 #subtest "complex pattern" => sub {
