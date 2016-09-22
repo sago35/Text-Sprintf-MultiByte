@@ -199,7 +199,7 @@ subtest "(minimum) width" => sub {
 subtest "end with '%'" => sub {
     trap {is sprintf('%3s%', 'あ'), ' あ%'};
     is $trap->stdout, "";
-    like $trap->stderr, qr/^Missing argument in sprintf/;
+    like $trap->stderr, qr/Invalid conversion in sprintf/;
 };
 
 #subtest "complex pattern" => sub {
