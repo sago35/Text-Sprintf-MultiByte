@@ -1,4 +1,4 @@
-package Text::Sprintf::MultiByte;
+package Text::Sprintf::Zenkaku;
 use 5.008001;
 use strict;
 use warnings;
@@ -127,23 +127,23 @@ __END__
 
 =head1 NAME
 
-Text::Sprintf::MultiByte - sprintf with multibyte chars
+Text::Sprintf::Zenkaku - sprintf with zenkaku chars
 
 =head1 SYNOPSIS
 
-    use Text::Sprintf::MultiByte qw(sprintf);
+    use Text::Sprintf::Zenkaku qw(sprintf);
 
-    sprintf "<%3s>", "あ"; # multibyte char works good
+    sprintf "<%3s>", "あ"; # zenkaku char works good
 
 =head1 DESCRIPTION
 
-Text::Sprintf::MultiByte is sprintf with multibyte chars.
+Text::Sprintf::Zenkaku is sprintf with zenkaku chars.
 
 =head1 METHOD
 
 =head2 sprintf()
 
-sprintf() with multibyte chars.
+sprintf() with zenkaku chars.
 
 =head1 LICENSE
 

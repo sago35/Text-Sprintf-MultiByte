@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use utf8;
 use Test::More;
-use Text::Sprintf::MultiByte qw(sprintf);
+use Text::Sprintf::Zenkaku qw(sprintf);
 use Test::Trap;
 
 use Term::Encoding qw(term_encoding);
@@ -22,7 +22,7 @@ subtest "format %s" => sub {
     is sprintf("[%-6s]", "hello"), "[hello ]";
 };
 
-subtest "format %s with multibyte" => sub {
+subtest "format %s with zenkaku" => sub {
     is sprintf("[%s]",   "A"), "[A]";
     is sprintf("[%6s]",  "A"), "[     A]";
     is sprintf("[%-6s]", "A"), "[A     ]";
@@ -32,7 +32,7 @@ subtest "format %s with multibyte" => sub {
     is sprintf("[%-6s]", "あ"), "[あ    ]";
 };
 
-subtest "format %s with multibyte 2" => sub {
+subtest "format %s with zenkaku 2" => sub {
     is sprintf("[%-12s]", "hello 世界."), "[hello 世界. ]";
     is sprintf("[%-11s]", "hello 世界."), "[hello 世界.]";
     is sprintf("[%-10s]", "hello 世界."), "[hello 世界.]";

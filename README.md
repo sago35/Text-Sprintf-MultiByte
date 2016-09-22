@@ -1,23 +1,23 @@
-[![Build Status](https://travis-ci.org/sago35/Text-Sprintf-MultiByte.svg?branch=master)](https://travis-ci.org/sago35/Text-Sprintf-MultiByte) [![Coverage Status](http://codecov.io/github/sago35/Text-Sprintf-MultiByte/coverage.svg?branch=master)](https://codecov.io/github/sago35/Text-Sprintf-MultiByte?branch=master)
+[![Build Status](https://travis-ci.org/sago35/Text-Sprintf-Zenkaku.svg?branch=master)](https://travis-ci.org/sago35/Text-Sprintf-Zenkaku) [![Coverage Status](http://codecov.io/github/sago35/Text-Sprintf-Zenkaku/coverage.svg?branch=master)](https://codecov.io/github/sago35/Text-Sprintf-Zenkaku?branch=master)
 # NAME
 
-Text::Sprintf::MultiByte - sprintf with multibyte chars
+Text::Sprintf::Zenkaku - sprintf with zenkaku chars
 
 # SYNOPSIS
 
-    use Text::Sprintf::MultiByte qw(sprintf);
+    use Text::Sprintf::Zenkaku qw(sprintf);
 
-    sprintf "<%3s>", "あ"; # multibyte char works good
+    sprintf "<%3s>", "あ"; # zenkaku char works good
 
 # DESCRIPTION
 
-Text::Sprintf::MultiByte is sprintf with multibyte chars.
+Text::Sprintf::Zenkaku is sprintf with zenkaku chars.
 
 # METHOD
 
 ## sprintf()
 
-sprintf() with multibyte chars.
+sprintf() with zenkaku chars.
 
 # LICENSE
 
