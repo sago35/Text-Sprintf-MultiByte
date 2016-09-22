@@ -113,7 +113,7 @@ subtest "sprintf %E" => sub {
 };
 
 subtest "sprintf %G" => sub {
-    is sprintf("%G%3s%G", ord('A'), "あ", 6.6e-9), CORE::printf("%G%2s%G", ord('A'), "あ", 6.6e-9);
+    is sprintf("%G%3s%G", ord('A'), "あ", 6.6e-9), CORE::sprintf("%G%2s%G", ord('A'), "あ", 6.6e-9);
 };
 
 subtest "sprintf %b" => sub {
