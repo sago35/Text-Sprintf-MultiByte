@@ -139,6 +139,12 @@ Text::Sprintf::MultiByte - sprintf with multibyte chars
 
 Text::Sprintf::MultiByte is sprintf with multibyte chars.
 
+=head1 METHOD
+
+=head2 sprintf()
+
+sprintf() with multibyte chars.
+
 =head1 LICENSE
 
 Copyright (C) sago35.

@@ -5,13 +5,19 @@ Text::Sprintf::MultiByte - sprintf with multibyte chars
 
 # SYNOPSIS
 
-    use Text::Sprintf::MultiByte;
+    use Text::Sprintf::MultiByte qw(sprintf);
 
-    spf "<%3s>", "あ"; # multibyte char works good
+    sprintf "<%3s>", "あ"; # multibyte char works good
 
 # DESCRIPTION
 
 Text::Sprintf::MultiByte is sprintf with multibyte chars.
+
+# METHOD
+
+## sprintf()
+
+sprintf() with multibyte chars.
 
 # LICENSE
 
