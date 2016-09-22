@@ -1,5 +1,5 @@
 {
-   "abstract" : "sprintf with multibyte chars",
+   "abstract" : "sprintf with zenkaku chars",
    "author" : [
       "sago35 <sago35@gmail.com>"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "Text-Sprintf-MultiByte",
+   "name" : "Text-Sprintf-Zenkaku",
    "no_index" : {
       "directory" : [
          "t",
@@ -56,13 +56,13 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/sago35/Text-Sprintf-MultiByte/issues"
+         "web" : "https://github.com/sago35/Text-Sprintf-Zenkaku/issues"
       },
-      "homepage" : "https://github.com/sago35/Text-Sprintf-MultiByte",
+      "homepage" : "https://github.com/sago35/Text-Sprintf-Zenkaku",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/sago35/Text-Sprintf-MultiByte.git",
-         "web" : "https://github.com/sago35/Text-Sprintf-MultiByte"
+         "url" : "git://github.com/sago35/Text-Sprintf-Zenkaku.git",
+         "web" : "https://github.com/sago35/Text-Sprintf-Zenkaku"
       }
    },
    "version" : "0.02",
