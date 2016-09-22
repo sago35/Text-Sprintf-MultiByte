@@ -9,11 +9,11 @@ use Encode;
 our $VERSION = "0.01";
 
 use Exporter 'import';
-our @EXPORT = qw(spf);
+our @EXPORT_OK = qw(sprintf);
 
 our $cp932 = Encode::find_encoding("cp932");
 
-sub spf {
+sub sprintf {
     my ($fmt, @argv) = @_;
     $fmt //= "";
 
@@ -65,7 +65,7 @@ sub spf {
 
                     my $diff = $cp932_width - $str_width;
 
-                    $tmp = sprintf "%%%s%s%ds", $x1, $x3, $width - $diff;
+                    $tmp = CORE::sprintf "%%%s%s%ds", $x1, $x3, $width - $diff;
                 }
 
                 $fmt_new .= $tmp;
@@ -114,7 +114,7 @@ sub spf {
         $ofs++;
     }
 
-    return sprintf $fmt_new, @argv;
+    return CORE::sprintf $fmt_new, @argv;
 }
 
 1;
@@ -128,9 +128,9 @@ Text::Sprintf::MultiByte - sprintf with multibyte chars
 
 =head1 SYNOPSIS
 
-    use Text::Sprintf::MultiByte;
+    use Text::Sprintf::MultiByte qw(sprintf);
 
-    spf "<%3s>", "あ"; # multibyte char works good
+    sprintf "<%3s>", "あ"; # multibyte char works good
 
 =head1 DESCRIPTION
 
