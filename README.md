@@ -23,6 +23,10 @@ sprintf() with zenkaku chars.
 
 Zenkaku considered calc width.
 
+# REPOSITORY
+
+https://github.com/sago35/Text-Sprintf-Zenkaku
+
 # LICENSE
 
 Copyright (C) sago35.
