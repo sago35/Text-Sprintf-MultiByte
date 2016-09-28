@@ -212,10 +212,18 @@ subtest "end with '%'" => sub {
 
 subtest "complex pattern" => sub {
     is sprintf('%*3$s%*4$s', 'あ', 'い', 3, 4), ' あ  い';
+    is sprintf('[%2$*1$s]', 3, 'あ'), '[ あ]';
+    is sprintf('[%2$   *1$s]', -3, 'あ'), '[あ ]';
+
+    is sprintf('[%2$*s]', -3, 'あ'), '[あ ]';
 };
 
 subtest "not supported" => sub {
     throws_ok {sprintf('%z', "a")} qr/not supported :/;
+};
+
+subtest "'% s' and '%  s'" => sub {
+    is sprintf('[% s][% 3s]', 'あ', 'い'), '[あ][ い]';
 };
 
 done_testing;
