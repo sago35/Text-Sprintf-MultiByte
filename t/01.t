@@ -214,6 +214,8 @@ subtest "complex pattern" => sub {
     is sprintf('%*3$s%*4$s', 'あ', 'い', 3, 4), ' あ  い';
     is sprintf('[%2$*1$s]', 3, 'あ'), '[ あ]';
     is sprintf('[%2$   *1$s]', -3, 'あ'), '[あ ]';
+
+    is sprintf('[%2$*s]', -3, 'あ'), '[あ ]';
 };
 
 subtest "not supported" => sub {
