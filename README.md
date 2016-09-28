@@ -19,6 +19,10 @@ Text::Sprintf::Zenkaku is sprintf with zenkaku chars.
 
 sprintf() with zenkaku chars.
 
+## calc\_width($width, $str)
+
+Zenkaku considered calc width.
+
 # LICENSE
 
 Copyright (C) sago35.
