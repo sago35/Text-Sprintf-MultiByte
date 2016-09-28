@@ -15,14 +15,28 @@ our $cp932 = Encode::find_encoding("cp932");
 
 our $conversions = $] < 5.022000 ? qr/\A[cduoxefgXEGbBpn]\Z/ : qr/\A[cduoxefgXEGbBpnaA]\Z/;
 
+sub calc_width {
+    my ($w, $s) = @_;
+
+    my $ofs;
+    if ($w >= 0) {
+        $ofs = $w - ((length $cp932->encode($s)) - (length $s));
+    } else {
+        $ofs = (abs $w) - ((length $cp932->encode($s)) - (length $s));
+        $ofs *= -1;
+    }
+
+    return $ofs;
+}
+
 sub sprintf {
-    my ($fmt, @argv) = @_;
-    $fmt //= "";
+    my @argv = @_;
+    my $fmt  = $argv[0] // "";
 
     my $ofs   = 0;
     my $state = "IDL";
 
-    my $index   = 0;
+    my $index   = 1;
     my $tmp     = "";
     my $fmt_new = "";
     my $length  = length $fmt;
@@ -47,61 +61,74 @@ sub sprintf {
                 # %s
                 $tmp .= $s;
 
-                if ($tmp =~ /^%(([0-9]+)\$)?(-?)([0-9]+)s$/) {
-                    my $x1 = $1 // "";
-                    my $x2 = $2 // "";
-                    my $x3 = $3 // "";
-                    my $x4 = $4 // "";
+                if ($tmp =~ /^%([1-9][0-9]*)\$( *)\*([1-9][0-9]*)\$s$/) {
+                    my $s_index = int $1;
+                    my $space   = $2;
+                    my $w_index = int $3;
 
-                    my $pos = $x2 ne "" ? int $x2 : -1;
-                    my $left = $x3 eq "-" ? 1 : 0;
-                    my $width = int $x4;
+                    my $s = $argv[$s_index];
+                    my $w = $argv[$w_index];
 
-                    my $tmp_index = $pos == -1 ? $index : $pos - 1;
+                    $argv[$w_index] = calc_width($w, $s);
 
-                    my $str_width   = length $argv[$tmp_index];
-                    my $cp932_width = length $cp932->encode($argv[$tmp_index]);
+                } elsif ($tmp =~ /^%([1-9][0-9]*)\$( *)\*s$/) {
+                    my $s_index = int $1;
+                    my $space   = $2;
+                    my $w_index = $index;
 
-                    my $diff = $cp932_width - $str_width;
+                    my $s = $argv[$s_index];
+                    my $w = $argv[$w_index];
 
-                    $tmp = CORE::sprintf "%%%s%s%ds", $x1, $x3, $width - $diff;
-                } elsif ($tmp =~ /^%\*(\d+)\$s$/) {
-                    my $x1 = $1 // 0;
+                    $argv[$w_index] = calc_width($w, $s);
 
-                    my $tmp_index = (int $x1) - 1;
-                    my $left  = (int $argv[$tmp_index]) < 0 ? 1 : 0;
-                    my $width = abs int $argv[$tmp_index];
+                } elsif ($tmp =~ /^%([1-9][0-9]*)\$( *)(-?[0-9]+)s$/) {
+                    my $s_index = int $1;
+                    my $space   = $2;
 
-                    my $str_width   = length $argv[$index];
-                    my $cp932_width = length $cp932->encode($argv[$index]);
+                    my $s = $argv[$s_index];
+                    my $w = $3;
 
-                    my $diff = $cp932_width - $str_width;
+                    $w = calc_width($w, $s);
 
-                    my $width_pre = $width - $diff;
-                    $argv[$tmp_index] = $width_pre;
-                    if ($left) {
-                        $argv[$tmp_index] *= -1;
-                    }
+                    $tmp = '%' . $s_index . '$' . $space . $w . 's';
 
-                } elsif ($tmp =~ /^%\*s$/) {
+                } elsif ($tmp =~ /^%([1-9][0-9]*)\$( *)s$/) {
+                    # do nothing
 
-                    my $tmp_index = $index - 1;
+                } elsif ($tmp =~ /^%( *)\*([1-9][0-9]*)\$s$/) {
+                    my $s_index = $index;
+                    my $space   = $1;
+                    my $w_index = int $2;
 
-                    my $left  = (int $argv[$tmp_index]) < 0 ? 1 : 0;
-                    my $width = abs int $argv[$tmp_index];
+                    my $s = $argv[$s_index];
+                    my $w = $argv[$w_index];
 
-                    my $str_width   = length $argv[$index];
-                    my $cp932_width = length $cp932->encode($argv[$index]);
+                    $argv[$w_index] = calc_width($w, $s);
 
-                    my $diff = $cp932_width - $str_width;
+                } elsif ($tmp =~ /^%( *)\*s$/) {
+                    my $s_index = $index + 1;
+                    my $space   = $1;
+                    my $w_index = $index;
+                    $index++;
 
-                    my $width_pre = $width - $diff;
-                    $argv[$tmp_index] = $width_pre;
-                    if ($left) {
-                        $argv[$tmp_index] *= -1;
-                    }
+                    my $s = $argv[$s_index];
+                    my $w = $argv[$w_index];
 
-                } else {
+                    $argv[$w_index] = calc_width($w, $s);
+
+                } elsif ($tmp =~ /^%( *)(-?[0-9]+)s$/) {
+                    my $space   = $1;
+
+                    my $s = $argv[$index];
+                    my $w = int $2;
+
+                    $w = calc_width($w, $s);
+
+                    $tmp = '%' . $space . $w . 's';
+
+                } elsif ($tmp =~ /^%( *)s$/) {
+                    # do nothing
+
                 }
 
                 $fmt_new .= $tmp;
@@ -122,6 +149,9 @@ sub sprintf {
                 $state = "READ_FORMAT_OR_ARGUMENT_NUMBER";
             } elsif ($s =~ /\A[-+ #\.v]\Z/) {
                 $tmp .= $s;
+                if ($tmp =~ /\*v/) {
+                    $index++;
+                }
             } else {
                 croak "not supported : $fmt";
             }
@@ -133,7 +163,7 @@ sub sprintf {
                 $state = "READ_FORMAT";
             } else {
                 $state = "READ_FORMAT";
-                $index++;
+                #$index++;
                 next;
             }
         } elsif ($state eq "READ_FORMAT_OR_ARGUMENT_NUMBER") {
@@ -154,6 +184,7 @@ sub sprintf {
 
     $fmt_new .= $tmp;
 
+    shift @argv;
     return CORE::sprintf $fmt_new, @argv;
 }
 
