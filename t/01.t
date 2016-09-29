@@ -138,12 +138,12 @@ subtest "sprintf %n" => sub {
 
 subtest "sprintf %a" => sub {
     plan skip_all => 'perl < 5.022000' if $] < 5.022000;
-    is sprintf("%a%3s%a", ord('A'), "あ", ord('B')), "0x1.04p+6 あ0x1.08p+6";
+    is sprintf("%a%3s%a", ord('A'), "あ", ord('B')), CORE::sprintf("%a%2s%a", ord('A'), "あ", ord('B'));
 };
 
 subtest "sprintf %A" => sub {
     plan skip_all => 'perl < 5.022000' if $] < 5.022000;
-    is sprintf("%A%3s%A", ord('A'), "あ", ord('B')), "0X1.04P+6 あ0X1.08P+6";
+    is sprintf("%A%3s%A", ord('A'), "あ", ord('B')), CORE::sprintf("%A%2s%A", ord('A'), "あ", ord('B'));
 };
 
 subtest "space" => sub {
