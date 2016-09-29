@@ -219,7 +219,7 @@ Zenkaku considered calc width.
 
 =head1 REPOSITORY
 
-https://github.com/sago35/Text-Sprintf-Zenkaku
+L<https://github.com/sago35/Text-Sprintf-Zenkaku>
 
 =head1 LICENSE
 
@@ -230,7 +230,7 @@ it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-sago35 E<lt>sago35@gmail.comE<gt>
+sago35 E<lt>takasago@cpan.orgE<gt>
 
 =cut
 

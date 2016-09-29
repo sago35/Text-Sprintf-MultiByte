@@ -25,7 +25,7 @@ Zenkaku considered calc width.
 
 # REPOSITORY
 
-https://github.com/sago35/Text-Sprintf-Zenkaku
+[https://github.com/sago35/Text-Sprintf-Zenkaku](https://github.com/sago35/Text-Sprintf-Zenkaku)
 
 # LICENSE
 
@@ -36,4 +36,4 @@ it under the same terms as Perl itself.
 
 # AUTHOR
 
-sago35 <sago35@gmail.com>
+sago35 <takasago@cpan.org>

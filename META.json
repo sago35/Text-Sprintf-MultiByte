@@ -1,7 +1,7 @@
 {
    "abstract" : "sprintf with zenkaku chars",
    "author" : [
-      "sago35 <sago35@gmail.com>"
+      "sago35 <takasago@cpan.org>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v3.0.1, CPAN::Meta::Converter version 2.150005",
@@ -67,5 +67,8 @@
       }
    },
    "version" : "0.05",
+   "x_contributors" : [
+      "sago35 <sago35@gmail.com>"
+   ],
    "x_serialization_backend" : "JSON::PP version 2.27300"
 }
