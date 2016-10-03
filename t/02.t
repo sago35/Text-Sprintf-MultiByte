@@ -14,6 +14,8 @@ eval {
 };
 
 subtest "complex width pattern" => sub {
+    is sprintf('[%6s][%6s]', 'あ', 'いう'), '[    あ][  いう]';
+    is sprintf('[%6s][%*3$s]', 'あ', 'いう', 6), '[    あ][  いう]';
     is sprintf('[%*3$s][%*3$s]', 'あ', 'いう', 6), '[    あ][  いう]';
 };
 

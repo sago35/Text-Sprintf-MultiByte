@@ -40,6 +40,7 @@ sub sprintf {
     my $tmp     = "";
     my $fmt_new = "";
     my $length  = length $fmt;
+    my $is_uniq = {};
 
     while ($ofs < $length) {
         my $s = substr $fmt, $ofs, 1;
@@ -66,26 +67,38 @@ sub sprintf {
                     my $space   = $2;
                     my $w_index = int $3;
 
-                    my $s = $argv[$s_index];
-                    my $w = $argv[$w_index];
+                    my $s = $_[$s_index];
+                    my $w = $_[$w_index];
 
-                    $argv[$w_index] = calc_width($w, $s);
+                    my $width = calc_width($w, $s);
+                    if (not exists $is_uniq->{$w_index}) {
+                        $argv[$w_index] = $width;
+                        $is_uniq->{$w_index}++;
+                    } else {
+                        $tmp = '%' . $s_index . $space . $width . 's';
+                    }
 
                 } elsif ($tmp =~ /^%([1-9][0-9]*)\$( *)\*s$/) {
                     my $s_index = int $1;
                     my $space   = $2;
                     my $w_index = $index;
 
-                    my $s = $argv[$s_index];
-                    my $w = $argv[$w_index];
+                    my $s = $_[$s_index];
+                    my $w = $_[$w_index];
 
-                    $argv[$w_index] = calc_width($w, $s);
+                    my $width = calc_width($w, $s);
+                    if (not exists $is_uniq->{$w_index}) {
+                        $argv[$w_index] = $width;
+                        $is_uniq->{$w_index}++;
+                    } else {
+                        $tmp = '%' . $s_index . $space . $width . 's';
+                    }
 
                 } elsif ($tmp =~ /^%([1-9][0-9]*)\$( *)(-?[0-9]+)s$/) {
                     my $s_index = int $1;
                     my $space   = $2;
 
-                    my $s = $argv[$s_index];
+                    my $s = $_[$s_index];
                     my $w = $3;
 
                     $w = calc_width($w, $s);
@@ -100,10 +113,16 @@ sub sprintf {
                     my $space   = $1;
                     my $w_index = int $2;
 
-                    my $s = $argv[$s_index];
-                    my $w = $argv[$w_index];
+                    my $s = $_[$s_index];
+                    my $w = $_[$w_index];
 
-                    $argv[$w_index] = calc_width($w, $s);
+                    my $width = calc_width($w, $s);
+                    if (not exists $is_uniq->{$w_index}) {
+                        $argv[$w_index] = $width;
+                        $is_uniq->{$w_index}++;
+                    } else {
+                        $tmp = '%' . $space . $width . 's';
+                    }
 
                 } elsif ($tmp =~ /^%( *)\*s$/) {
                     my $s_index = $index + 1;
@@ -111,15 +130,22 @@ sub sprintf {
                     my $w_index = $index;
                     $index++;
 
-                    my $s = $argv[$s_index];
-                    my $w = $argv[$w_index];
+                    my $s = $_[$s_index];
+                    my $w = $_[$w_index];
 
-                    $argv[$w_index] = calc_width($w, $s);
+                    my $width = calc_width($w, $s);
+
+                    if (not exists $is_uniq->{$w_index}) {
+                        $argv[$w_index] = $width;
+                        $is_uniq->{$w_index}++;
+                    } else {
+                        $tmp = '%' . $space . $width . 's';
+                    }
 
                 } elsif ($tmp =~ /^%( *)(-?[0-9]+)s$/) {
                     my $space   = $1;
 
-                    my $s = $argv[$index];
+                    my $s = $_[$index];
                     my $w = int $2;
 
                     $w = calc_width($w, $s);
