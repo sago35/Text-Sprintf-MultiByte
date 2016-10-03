@@ -7,9 +7,11 @@ use Test::Trap;
 use Test::Exception;
 
 use Term::Encoding qw(term_encoding);
-my $encoding = term_encoding;
-binmode STDOUT => "encoding($encoding)";
-binmode STDERR => "encoding($encoding)";
+eval {
+    my $encoding = term_encoding;
+    binmode STDOUT => "encoding($encoding)";
+    binmode STDERR => "encoding($encoding)";
+};
 
 subtest "normal" => sub {
     is sprintf(), "";
