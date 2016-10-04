@@ -75,7 +75,7 @@ sub sprintf {
                         $argv[$w_index] = $width;
                         $is_uniq->{$w_index}++;
                     } else {
-                        $tmp = '%' . $s_index . $space . $width . 's';
+                        $tmp = '%' . $s_index . '$' . $space . $width . 's';
                     }
 
                 } elsif ($tmp =~ /^%([1-9][0-9]*)\$( *)\*s$/) {
@@ -91,8 +91,9 @@ sub sprintf {
                         $argv[$w_index] = $width;
                         $is_uniq->{$w_index}++;
                     } else {
-                        $tmp = '%' . $s_index . $space . $width . 's';
+                        $tmp = '%' . $s_index . '$' . $space . $width . 's';
                     }
+                    $index++;
 
                 } elsif ($tmp =~ /^%([1-9][0-9]*)\$( *)(-?[0-9]+)s$/) {
                     my $s_index = int $1;
@@ -104,9 +105,11 @@ sub sprintf {
                     $w = calc_width($w, $s);
 
                     $tmp = '%' . $s_index . '$' . $space . $w . 's';
+                    $index++;
 
                 } elsif ($tmp =~ /^%([1-9][0-9]*)\$( *)s$/) {
                     # do nothing
+                    $index++;
 
                 } elsif ($tmp =~ /^%( *)\*([1-9][0-9]*)\$s$/) {
                     my $s_index = $index;
@@ -123,6 +126,7 @@ sub sprintf {
                     } else {
                         $tmp = '%' . $space . $width . 's';
                     }
+                    $index++;
 
                 } elsif ($tmp =~ /^%( *)\*s$/) {
                     my $s_index = $index + 1;
@@ -139,8 +143,11 @@ sub sprintf {
                         $argv[$w_index] = $width;
                         $is_uniq->{$w_index}++;
                     } else {
-                        $tmp = '%' . $space . $width . 's';
+                        #$tmp = '%' . $space . $width . 's';
+                        $argv[$w_index] = $width;
+                        $is_uniq->{$w_index}++;
                     }
+                    $index++;
 
                 } elsif ($tmp =~ /^%( *)(-?[0-9]+)s$/) {
                     my $space   = $1;
@@ -151,15 +158,16 @@ sub sprintf {
                     $w = calc_width($w, $s);
 
                     $tmp = '%' . $space . $w . 's';
+                    $index++;
 
-                } elsif ($tmp =~ /^%( *)s$/) {
+                } else {
                     # do nothing
+                    $index++;
 
                 }
 
                 $fmt_new .= $tmp;
                 $tmp = "";
-                $index++;
                 $state = "IDL";
             } elsif ($s =~ /$conversions/) {
                 # %c, %d, %u, %o, %x, %e, %f, %g, ...
@@ -192,7 +200,8 @@ sub sprintf {
                 #$index++;
                 next;
             }
-        } elsif ($state eq "READ_FORMAT_OR_ARGUMENT_NUMBER") {
+        } else {
+            # $state eq "READ_FORMAT_OR_ARGUMENT_NUMBER"
             if ($s =~ /\A[0-9]\Z/) {
                 $tmp .= $s;
             } elsif ($s eq '$') {
@@ -202,8 +211,6 @@ sub sprintf {
                 $state = "READ_FORMAT";
                 next;
             }
-        } else {
-            croak "state error : $state";
         }
         $ofs++;
     }
