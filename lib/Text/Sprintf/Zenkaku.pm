@@ -6,7 +6,7 @@ use utf8;
 use Carp;
 use Encode;
 
-our $VERSION = "0.06";
+our $VERSION = "0.07";
 
 use Exporter 'import';
 our @EXPORT_OK = qw(sprintf);

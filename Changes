@@ -2,6 +2,11 @@ Revision history for Perl extension Text-Sprintf-Zenkaku
 
 {{$NEXT}}
 
+0.07 2016-10-04T15:04:34Z
+
+    - Support 'complex width pattern'
+    - Fix encoding issue when run 'prove' cmd
+
 0.06 2016-09-29T10:53:09Z
 
     - Fix failed tests
