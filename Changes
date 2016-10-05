@@ -2,6 +2,10 @@ Revision history for Perl extension Text-Sprintf-Zenkaku
 
 {{$NEXT}}
 
+0.08 2016-10-05T11:53:45Z
+
+    - Support perl 5.8
+
 0.07 2016-10-04T15:04:34Z
 
     - Support 'complex width pattern'
