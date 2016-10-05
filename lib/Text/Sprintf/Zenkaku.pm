@@ -15,7 +15,7 @@ our $cp932 = Encode::find_encoding("cp932");
 
 our $conversions = qr/\A[cduoxefgXEGbBpnaA]\Z/;
 $conversions = qr/\A[cduoxefgXEGbBpn]\Z/ if $] lt 5.022000;
-$conversions = qr/\A[cduoxefgXEGbpn]\Z/ if $] lt 5.022000;
+$conversions = qr/\A[cduoxefgXEGbpn]\Z/ if $] lt 5.010000;
 
 sub calc_width {
     my ($w, $s) = @_;
