@@ -31,7 +31,7 @@ sub calc_width {
 
 sub sprintf {
     my @argv = @_;
-    my $fmt  = $argv[0] // "";
+    my $fmt  = defined $argv[0] ? $argv[0] : "";
 
     my $ofs   = 0;
     my $state = "IDL";
