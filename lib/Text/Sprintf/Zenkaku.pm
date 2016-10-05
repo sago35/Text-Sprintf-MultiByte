@@ -13,7 +13,9 @@ our @EXPORT_OK = qw(sprintf);
 
 our $cp932 = Encode::find_encoding("cp932");
 
-our $conversions = $] lt 5.022000 ? qr/\A[cduoxefgXEGbBpn]\Z/ : qr/\A[cduoxefgXEGbBpnaA]\Z/;
+our $conversions = qr/\A[cduoxefgXEGbBpnaA]\Z/;
+$conversions = qr/\A[cduoxefgXEGbBpn]\Z/ if $] lt 5.022000;
+$conversions = qr/\A[cduoxefgXEGbpn]\Z/ if $] lt 5.022000;
 
 sub calc_width {
     my ($w, $s) = @_;
