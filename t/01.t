@@ -125,6 +125,7 @@ subtest "sprintf %b" => sub {
 };
 
 subtest "sprintf %B" => sub {
+    plan skip_all => 'perl < 5.010000' if $] < 5.010000;
     is sprintf("%B%3s%B", ord('A'), "あ", ord('B')), "1000001 あ1000010";
 };
 
@@ -169,6 +170,10 @@ subtest "sharp '#'" => sub {
     is sprintf("%#x%3s%#x", 12, "あ", 12), "0xc あ0xc";
     is sprintf("%#X%3s%#X", 12, "あ", 12), "0XC あ0XC";
     is sprintf("%#b%3s%#b", 12, "あ", 12), "0b1100 あ0b1100";
+};
+
+subtest "sharp '#' with %B" => sub {
+    plan skip_all => 'perl < 5.010000' if $] < 5.010000;
     is sprintf("%#B%3s%#B", 12, "あ", 12), "0B1100 あ0B1100";
 };
 
