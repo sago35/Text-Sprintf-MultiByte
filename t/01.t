@@ -178,13 +178,13 @@ subtest "sharp '#' with %B" => sub {
 };
 
 subtest "plus '+' and space ' '" => sub {
-    is sprintf("%+ d%3s% +d", 12, "あ", 12), "+12 あ+12";
+    is sprintf("%+ d%3s% +d", 12, "あ", 12), CORE::sprintf("%+ d%2s% +d", 12, "あ", 12);
 };
 
 subtest "sharp '#' and precision" => sub {
     is sprintf("%#.5o%3s", 012, "あ"), "00012 あ";
     is sprintf("%#.5o%3s", 012345, "あ"), "012345 あ";
-    is sprintf("%#.0o%3s", 0, "あ"), "0 あ";
+    is sprintf("%#.0o%3s", 0, "あ"), CORE::sprintf("%#.0o%2s", 0, "あ");
 };
 
 subtest "vector flag" => sub {
